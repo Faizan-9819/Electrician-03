@@ -629,7 +629,7 @@ export default function BookingForm({ isOpen, onClose }: BookingFormProps) {
               {/* Body — scrollable (smooth-scrolled via Lenis) whenever content is long */}
               <div
                 ref={modalBodyRef}
-                className="relative px-6 lg:px-8 py-6 flex flex-col flex-1 min-h-0 max-h-[calc(100vh-64px)] overflow-y-auto touch-pan-y"
+                className="modal-body-scroll relative px-6 lg:px-8 py-6 flex flex-col flex-1 min-h-0 max-h-[calc(100vh-64px)] overflow-y-auto touch-pan-y"
                 data-lenis-prevent
               >
                 <div
@@ -745,6 +745,23 @@ export default function BookingForm({ isOpen, onClose }: BookingFormProps) {
             .services-scroll {
               scrollbar-width: thin;
               scrollbar-color: var(--accent) var(--soft);
+            }
+            .modal-body-scroll::-webkit-scrollbar {
+              width: 8px;
+            }
+            .modal-body-scroll::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            .modal-body-scroll::-webkit-scrollbar-thumb {
+              background: var(--accent);
+              border-radius: 999px;
+            }
+            .modal-body-scroll::-webkit-scrollbar-thumb:hover {
+              background: var(--accent-2);
+            }
+            .modal-body-scroll {
+              scrollbar-width: thin;
+              scrollbar-color: var(--accent) transparent;
             }
           `}</style>
         </>
