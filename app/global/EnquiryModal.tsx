@@ -58,7 +58,7 @@ export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
               role="dialog"
               aria-modal="true"
               aria-label={t({
-                en: "Request a visit or quote",
+                en: "Let's Connect",
                 nl: "Vraag een bezoek of offerte aan",
               })}
               data-lenis-prevent
@@ -71,7 +71,7 @@ export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                     </p>
                     <h2 className="mt-1 text-[clamp(20px,3.8vw,24px)] leading-[1.15] font-extrabold">
                       {t({
-                        en: "Request a visit or quote",
+                        en: "Let's Connect",
                         nl: "Vraag een bezoek of offerte aan",
                       })}
                     </h2>
