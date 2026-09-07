@@ -1,6 +1,7 @@
 "use client";
 import { useLanguage } from "../i18n/LanguageProvider";
 import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
 import {
   useCallback,
   useEffect,
@@ -228,6 +229,10 @@ export default function BookingForm({ isOpen, onClose }: BookingFormProps) {
 
   const fetchedSettingsRef = useRef(false);
 
+  const modalBodyRef = useRef<HTMLDivElement | null>(null);
+  const modalBodyContentRef = useRef<HTMLDivElement | null>(null);
+  const modalLenisRef = useRef<Lenis | null>(null);
+
   const goTo = useCallback(
     (next: Step) => {
       setDirection(stepIndex(next) > stepIndex(step) ? 1 : -1);
@@ -323,6 +328,34 @@ export default function BookingForm({ isOpen, onClose }: BookingFormProps) {
       };
     }
   }, [isOpen, lenisStop, lenisStart]);
+
+  // Smooth-scroll the modal body with its own Lenis instance, independent of
+  // the page-level Lenis (which is stopped while the modal is open).
+  useEffect(() => {
+    if (!isOpen) return;
+    const wrapper = modalBodyRef.current;
+    const content = modalBodyContentRef.current;
+    if (!wrapper || !content) return;
+
+    const modalLenis = new Lenis({
+      wrapper,
+      content,
+      autoRaf: true,
+      lerp: 0.12,
+      gestureOrientation: "vertical",
+    });
+    modalLenisRef.current = modalLenis;
+
+    return () => {
+      modalLenis.destroy();
+      modalLenisRef.current = null;
+    };
+  }, [isOpen]);
+
+  // Jump back to the top of the modal body whenever the step changes.
+  useEffect(() => {
+    modalLenisRef.current?.scrollTo(0, { immediate: true });
+  }, [step]);
 
   // ESC closes
   useEffect(() => {
@@ -593,79 +626,85 @@ export default function BookingForm({ isOpen, onClose }: BookingFormProps) {
                 )}
               </div>
 
-              {/* Body — make content area scrollable when content is long */}
+              {/* Body — scrollable (smooth-scrolled via Lenis) whenever content is long */}
               <div
-                className="relative px-6 lg:px-8 py-6 flex flex-col flex-1 min-h-0 max-h-[calc(100vh-64px)] overflow-y-auto lg:max-h-none lg:overflow-y-visible touch-pan-y"
+                ref={modalBodyRef}
+                className="relative px-6 lg:px-8 py-6 flex flex-col flex-1 min-h-0 max-h-[calc(100vh-64px)] overflow-y-auto touch-pan-y"
                 data-lenis-prevent
               >
-                <AnimatePresence mode="wait" custom={direction}>
-                  {step === "service" && (
-                    <Slide key="service" direction={direction}>
-                      <ServiceStep
-                        services={services}
-                        loading={loadingSettings}
-                        error={settingsError}
-                        serviceId={serviceId}
-                        onServiceChange={setServiceId}
-                        onContinue={() => goTo("slot")}
-                      />
-                    </Slide>
-                  )}
+                <div
+                  ref={modalBodyContentRef}
+                  className="flex flex-col flex-1 min-h-0"
+                >
+                  <AnimatePresence mode="wait" custom={direction}>
+                    {step === "service" && (
+                      <Slide key="service" direction={direction}>
+                        <ServiceStep
+                          services={services}
+                          loading={loadingSettings}
+                          error={settingsError}
+                          serviceId={serviceId}
+                          onServiceChange={setServiceId}
+                          onContinue={() => goTo("slot")}
+                        />
+                      </Slide>
+                    )}
 
-                  {step === "slot" && (
-                    <Slide key="slot" direction={direction}>
-                      <SlotStep
-                        loading={loadingSlots}
-                        error={slotsError}
-                        dateRange={dateRange}
-                        availableDateSet={availableDateSet}
-                        selectedDate={selectedDate}
-                        onSelectDate={(d) => {
-                          setSelectedDate(d);
-                          setSelectedSlot(null);
-                        }}
-                        slots={slotsForSelectedDate}
-                        availableSlots={availableSlotsForDate}
-                        selectedSlot={selectedSlot}
-                        onSelectSlot={setSelectedSlot}
-                        onBack={() => goTo("service")}
-                        onContinue={() => goTo("details")}
-                      />
-                    </Slide>
-                  )}
+                    {step === "slot" && (
+                      <Slide key="slot" direction={direction}>
+                        <SlotStep
+                          loading={loadingSlots}
+                          error={slotsError}
+                          dateRange={dateRange}
+                          availableDateSet={availableDateSet}
+                          selectedDate={selectedDate}
+                          onSelectDate={(d) => {
+                            setSelectedDate(d);
+                            setSelectedSlot(null);
+                          }}
+                          slots={slotsForSelectedDate}
+                          availableSlots={availableSlotsForDate}
+                          selectedSlot={selectedSlot}
+                          onSelectSlot={setSelectedSlot}
+                          onBack={() => goTo("service")}
+                          onContinue={() => goTo("details")}
+                        />
+                      </Slide>
+                    )}
 
-                  {step === "details" && (
-                    <Slide key="details" direction={direction}>
-                      <DetailsStep
-                        service={selectedService}
-                        slot={selectedSlot}
-                        name={name}
-                        setName={setName}
-                        email={email}
-                        setEmail={setEmail}
-                        phone={phone}
-                        setPhone={setPhone}
-                        notes={notes}
-                        setNotes={setNotes}
-                        onBack={() => goTo("slot")}
-                        onSubmit={handleSubmit}
-                        submitting={submitting}
-                        error={submitError}
-                      />
-                    </Slide>
-                  )}
+                    {step === "details" && (
+                      <Slide key="details" direction={direction}>
+                        <DetailsStep
+                          service={selectedService}
+                          slot={selectedSlot}
+                          name={name}
+                          setName={setName}
+                          email={email}
+                          setEmail={setEmail}
+                          phone={phone}
+                          setPhone={setPhone}
+                          notes={notes}
+                          setNotes={setNotes}
+                          onBack={() => goTo("slot")}
+                          onSubmit={handleSubmit}
+                          submitting={submitting}
+                          error={submitError}
+                        />
+                      </Slide>
+                    )}
 
-                  {step === "success" && (
-                    <Slide key="success" direction={1}>
-                      <SuccessStep
-                        service={selectedService}
-                        slot={selectedSlot}
-                        name={name}
-                        onClose={onClose}
-                      />
-                    </Slide>
-                  )}
-                </AnimatePresence>
+                    {step === "success" && (
+                      <Slide key="success" direction={1}>
+                        <SuccessStep
+                          service={selectedService}
+                          slot={selectedSlot}
+                          name={name}
+                          onClose={onClose}
+                        />
+                      </Slide>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
           </div>
