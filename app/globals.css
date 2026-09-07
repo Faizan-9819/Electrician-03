@@ -1,26 +1,438 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #F4F4F1;
+  --ink-2: #C6C3BC;
+  --muted: #8E8A82;
+  --line: #2A2A2A;
+  --bg: #0B0B0B;
+  --surface: #1A1A1A;
+  --tint: #17130D;
+  --tint-2: #241B10;
+  --accent: #FFB020;
+  --accent-deep: #FFC24D;
+  --accent-soft: #C9923E;
+  --accent-2: #FFC24D;
+  --gold: #FFB020;
+  --card: #1A1A1A;
+  --soft: #141414;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5), 0 1px 1px rgba(0, 0, 0, .4);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, .55), 0 10px 30px -8px rgba(0, 0, 0, .55);
+  --shadow-lg: 0 22px 70px -18px rgba(0, 0, 0, .8), 0 8px 22px -8px rgba(0, 0, 0, .6);
+
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-2xl: 44px;
+
+  --container-max: 1240px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-tint: var(--tint);
+  --color-tint-2: var(--tint-2);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-card: var(--card);
+  --color-soft: var(--soft);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --radius-xs: var(--r-xs);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+  --radius-2xl: var(--r-2xl);
+
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  /* No `scroll-behavior: smooth` here — Lenis (see SmoothScroll.tsx) owns
+     smooth scrolling in JS. Leaving the native CSS behavior on too causes the
+     two to fight over the scroll position. */
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'ss01', 'ss02', 'cv01';
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #0B0B0B;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Tailwind wraps its own utilities in `@layer utilities`, and unlayered CSS
+   always beats layered CSS regardless of specificity — so every custom class
+   below must live in `@layer components` or a Tailwind utility (hidden,
+   hover:, md:, etc.) combined with it in a className would silently lose. */
+@layer components {
+  /* ── Layout container ───────────────────────────────── */
+  .fix {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 1440px) {
+    .fix {
+      max-width: 100%;
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .fix {
+      width: 92%;
+    }
+  }
+
+  /* ── Uniform section spacing (80px desktop / 50px mobile) ── */
+  .section-py {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @media (max-width: 640px) {
+    .section-py {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+  }
+
+  /* ── Shared design-system helpers (kept as CSS: rely on
+     ::before/::after content, not expressible as plain Tailwind utilities) ── */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .eyebrow--center::after {
+    content: '';
+    width: 22px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .display-serif {
+    font-family: var(--font-display), 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.01em;
+  }
+
+  .lede {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+
+  .hairline {
+    height: 1px;
+    background: var(--line);
+    border: 0;
+    margin: 0;
+  }
+
+  .dot-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+  }
+  .dot-row::before,
+  .dot-row::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--tint-2);
+  }
+
+  .media {
+    background: linear-gradient(135deg, var(--tint) 0%, var(--tint-2) 100%);
+    border-radius: var(--r-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .imgph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, .28);
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .imgph::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 30%, rgba(255, 176, 32, .05), transparent 42%),
+      radial-gradient(circle at 70% 70%, rgba(0, 0, 0, .45), transparent 55%);
+    pointer-events: none;
+  }
+  .imgph svg {
+    width: 32px;
+    height: 32px;
+    opacity: .5;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -.005em;
+    white-space: nowrap;
+    transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn:active {
+    transform: translateY(0);
+  }
+  .btn--primary {
+    background: var(--accent);
+    color: #0B0B0B;
+    box-shadow: 0 8px 30px -8px rgba(255, 176, 32, .45);
+  }
+  .btn--primary:hover {
+    background: var(--accent-deep);
+  }
+  .btn--accent {
+    background: var(--accent);
+    color: #0B0B0B;
+  }
+  .btn--accent:hover {
+    background: var(--accent-deep);
+  }
+  .btn--ghost {
+    color: var(--ink);
+    border: 1px solid var(--line);
+    background: transparent;
+  }
+  .btn--ghost:hover {
+    background: var(--surface);
+    border-color: var(--ink-2);
+  }
+  .btn--surface {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn--surface:hover {
+    border-color: var(--ink-2);
+  }
+  .btn--sm {
+    height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+  .btn--lg {
+    height: 56px;
+    padding: 0 28px;
+    font-size: 15px;
+  }
+
+  /* ── Aliases for the shared enquiry/booking/cookie forms (app/global/*) ──
+     Those components ship with their own class names (single-dash, bg-grad)
+     from the wider template; map them onto this project's real brand tokens
+     instead of duplicating every className. ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -.005em;
+    white-space: nowrap;
+    background: var(--accent);
+    color: #0B0B0B;
+    box-shadow: 0 8px 30px -8px rgba(255, 176, 32, .45);
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    background: transparent;
+    transition: background .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .btn-secondary:hover {
+    background: var(--surface);
+    border-color: var(--ink-2);
+  }
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+
+  .bg-grad {
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255, 176, 32, .35), transparent 60%),
+      linear-gradient(135deg, #231A09 0%, #0A0A0A 72%);
+  }
+
+  .arrow {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--tint);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow svg {
+    width: 12px;
+    height: 12px;
+  }
+  .btn--primary .arrow,
+  .btn--accent .arrow {
+    background: rgba(0, 0, 0, .18);
+  }
+
+  .fade-in {
+    animation: fadeUp .8s cubic-bezier(.2, .6, .2, 1) both;
+  }
+
+  /* ── Scroll-triggered reveal (see ScrollReveal.tsx) ──
+     Starts hidden/offset, then transitions in once ".reveal-in" is added
+     by the IntersectionObserver. The ".reveal-d*" classes stagger cards
+     within the same grid/row. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .9s cubic-bezier(.16, .8, .3, 1),
+      transform .9s cubic-bezier(.16, .8, .3, 1);
+  }
+  .reveal.reveal-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-d1 { transition-delay: .1s; }
+  .reveal-d2 { transition-delay: .2s; }
+  .reveal-d3 { transition-delay: .3s; }
+  .reveal-d4 { transition-delay: .4s; }
+  .reveal-d5 { transition-delay: .5s; }
+  .reveal-d6 { transition-delay: .6s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
