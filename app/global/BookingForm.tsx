@@ -1555,7 +1555,7 @@ function SuccessStep({
       </div>
 
       {(service || slot) && (
-        <div className="w-full max-w-[420px] mt-2 rounded-2xl border border-line bg-soft px-4 py-3 text-left">
+        <div className="w-full max-w-[420px] mt-2 rounded-md border border-line bg-soft px-4 py-3 text-left">
           <div className="grid grid-cols-2 gap-2 text-[13px]">
             {service?.name && (
               <SummaryRow

@@ -45,9 +45,9 @@ const INITIAL_FIELD_ERRORS = {
 
 const LABEL_CLASS = "text-[13px] font-semibold text-muted ml-1";
 const INPUT_BASE =
-  "w-full h-fit p-2 rounded-md border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-ink bg-soft placeholder:text-[#8890a0]";
+  "w-full h-fit p-2 rounded-sm border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-ink bg-soft placeholder:text-[#8890a0]";
 const SELECT_BASE =
-  "w-full h-[41.45px] py-1 pl-4 pr-10 rounded-md border border-line focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-ink bg-soft appearance-none cursor-pointer";
+  "w-full h-[41.45px] py-1 pl-4 pr-10 rounded-sm border border-line focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-ink bg-soft appearance-none cursor-pointer";
 
 export default function LeadEnquiryForm({
   idPrefix = "lead",
