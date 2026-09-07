@@ -1,7 +1,10 @@
 import Logo from "./Logo";
 
 const FOOTER_COLUMNS = [
-  { title: "Company", items: ["Home", "About", "Why Us", "Team", "Projects", "Blog"] },
+  {
+    title: "Company",
+    items: ["Home", "About", "Why Us", "Team", "Projects", "Blog"],
+  },
   {
     title: "Services",
     items: [
@@ -19,14 +22,15 @@ const SOCIALS = ["Instagram", "LinkedIn", "Google"];
 
 export default function Footer() {
   return (
-    <footer className="bg-black pt-20 pb-8 text-ink">
+    <footer className="bg-black pt-10 md:pt-20 pb-8 text-ink">
       <div className="fix">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1.2fr] md:gap-12">
           <div>
             <Logo color="#fff" />
             <p className="mt-5 max-w-[300px] text-sm leading-[1.6] text-[#9CABA6]">
-              Certified residential and commercial electricians — emergency repairs,
-              installations, EV charging and smart home, across the Netherlands.
+              Certified residential and commercial electricians — emergency
+              repairs, installations, EV charging and smart home, across the
+              Netherlands.
             </p>
             <div className="mt-6 flex gap-2.5">
               {SOCIALS.map((s) => (
@@ -78,7 +82,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <hr className="mt-14 mb-6 h-px border-0 bg-white/8" />
+        <hr className="mt-6 md:mt-14 mb-6 h-px border-0 bg-white/8" />
 
         <div className="flex flex-wrap items-center justify-between gap-5 text-[12.5px] text-[#7E8E89]">
           <div>© 2026 Strøm Electric · KvK 81234567 · BTW NL003456789B01</div>
@@ -98,12 +102,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/6 pt-6 text-[11.5px] text-[#5E6E69]">
+        <div className="md:mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/6 pt-6 text-[11.5px] text-[#5E6E69]">
           <span>
-            A flagship template by <span className="text-[#B9CFC6]">Growth Rocket</span> —
-            managed websites &amp; booking for small businesses.
+            A flagship template by{" "}
+            <span className="text-[#B9CFC6]">Growth Rocket</span> — managed
+            websites &amp; booking for small businesses.
           </span>
-          <span className="tracking-[.18em] uppercase">Designed in Amsterdam</span>
+          <span className="tracking-[.18em] uppercase">
+            Designed in Amsterdam
+          </span>
         </div>
       </div>
     </footer>

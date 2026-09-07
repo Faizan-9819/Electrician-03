@@ -47,14 +47,17 @@ export default function Process() {
             </span>
             <h2 className="mt-4.5 text-[clamp(34px,3.6vw,52px)] leading-[1.05] font-normal tracking-[-.022em] text-white">
               Four steps — <br />
-              <span className="display-serif" style={{ color: "var(--accent-soft)" }}>
+              <span
+                className="display-serif"
+                style={{ color: "var(--accent-soft)" }}
+              >
                 no surprises.
               </span>
             </h2>
           </div>
           <p className="reveal reveal-d1 max-w-[380px] text-lg leading-[1.6] text-[#A9B6B1]">
-            The same clear process for a single repair or a full installation. You always know
-            exactly what&apos;s next.
+            The same clear process for a single repair or a full installation.
+            You always know exactly what&apos;s next.
           </p>
         </div>
 
@@ -72,7 +75,9 @@ export default function Process() {
                 <h4 className="text-lg leading-[1.3] font-medium tracking-[-.01em] text-white">
                   {s.title}
                 </h4>
-                <p className="mt-2.5 text-sm leading-[1.6] text-[#9CABA6]">{s.body}</p>
+                <p className="mt-2.5 text-sm leading-[1.6] text-[#9CABA6]">
+                  {s.body}
+                </p>
               </div>
             ))}
           </div>
@@ -80,7 +85,7 @@ export default function Process() {
 
         <div className="mt-16 flex flex-wrap items-center justify-between gap-5 rounded-md border border-white/[.08] bg-white/[.04] px-8 py-7">
           <div className="flex items-center gap-4">
-            <span className="flex h-10.5 w-10.5 items-center justify-center rounded-full bg-accent">
+            <span className="flex w-14 h-10.5 md:w-10.5 items-center justify-center rounded-full bg-accent">
               <Icon name="calendar" size={18} />
             </span>
             <div>
@@ -94,7 +99,10 @@ export default function Process() {
           </div>
           <a href="#book" className="btn btn--accent w-full md:w-auto">
             Book an appointment{" "}
-            <span className="arrow" style={{ background: "rgba(255,255,255,.18)" }}>
+            <span
+              className="arrow"
+              style={{ background: "rgba(255,255,255,.18)" }}
+            >
               <Icon name="arrowUR" size={11} stroke={2} />
             </span>
           </a>

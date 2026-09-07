@@ -814,7 +814,7 @@ function ServiceStep({
                     key={s.id}
                     onClick={() => onServiceChange(s.id)}
                     className={
-                      "group relative text-left rounded-xl border px-4 py-3.5 transition-all cursor-pointer " +
+                      "group relative text-left rounded-md border px-4 py-3.5 transition-all cursor-pointer " +
                       (active
                         ? "border-accent bg-accent/10 shadow-[0_8px_24px_-12px_rgba(255,176,32,0.35)]"
                         : "border-line hover:border-accent/50 hover:bg-accent/5")

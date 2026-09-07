@@ -143,7 +143,7 @@ export default function CookieModal({ isOpen, onClose }: CookieModalProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 24 }}
               transition={{ type: "spring", duration: 0.55, bounce: 0.28 }}
-              className="relative w-full max-w-[520px] bg-card rounded-3xl shadow-2xl pointer-events-auto overflow-hidden flex flex-col max-h-[calc(100vh-24px)]"
+              className="relative w-full max-w-[520px] bg-card rounded-md shadow-2xl pointer-events-auto overflow-hidden flex flex-col max-h-[calc(100vh-24px)]"
               role="dialog"
               aria-modal="true"
               aria-label={t({

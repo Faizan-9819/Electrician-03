@@ -57,7 +57,7 @@ export default function CookieConsentBanner({
           role="dialog"
           aria-label={t({ en: "Cookie notice", nl: "Cookiemelding" })}
           data-lenis-prevent
-          className="fixed bottom-24 right-4 z-[500] w-[calc(100vw-32px)] max-w-[360px] rounded-2xl border border-line bg-card p-5 shadow-2xl sm:bottom-28 sm:right-6"
+          className="fixed bottom-0 right-4 z-[500] w-[calc(100vw-32px)] max-w-[360px] rounded-md border border-line bg-card p-5 shadow-2xl sm:bottom-6 sm:right-6"
         >
           <h2 className="text-[15px] font-bold text-ink">
             {t({ en: "We use cookies", nl: "Wij gebruiken cookies" })}
@@ -67,10 +67,7 @@ export default function CookieConsentBanner({
               en: "We use cookies to make this website work properly and to understand how it's used. You can accept all, reject non-essential, or choose which ones to allow.",
               nl: "We gebruiken cookies om deze site goed te laten werken en te begrijpen hoe hij wordt gebruikt. Je kunt alles accepteren, niet-essentiële weigeren of zelf kiezen.",
             })}{" "}
-            <a
-              href="#privacy"
-              className="text-ink-2 underline hover:text-ink"
-            >
+            <a href="#privacy" className="text-ink-2 underline hover:text-ink">
               {t({ en: "Privacy Policy", nl: "Privacybeleid" })}
             </a>
           </p>
@@ -89,7 +86,10 @@ export default function CookieConsentBanner({
               onClick={rejectNonEssential}
               className="btn-secondary border-white/15 flex-1 cursor-pointer"
             >
-              {t({ en: "Reject non-essential", nl: "Niet-essentieel weigeren" })}
+              {t({
+                en: "Reject non-essential",
+                nl: "Niet-essentieel weigeren",
+              })}
             </button>
             <button
               type="button"
