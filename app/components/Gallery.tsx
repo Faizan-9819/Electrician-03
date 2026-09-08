@@ -1,4 +1,9 @@
+"use client";
+
 import Image from "next/image";
+import useEmblaCarousel from "embla-carousel-react";
+import CarouselNavButton from "./CarouselNavButton";
+import { useCarouselNav } from "./useCarouselNav";
 
 type GalleryItem = {
   id: string;
@@ -17,7 +22,28 @@ const GALLERY: GalleryItem[] = [
   { id: "g4", label: "Smart home controls", img: "/images/gallery/smart-home-controls.jpg" },
 ];
 
+function GalleryCard({ g, className = "" }: { g: GalleryItem; className?: string }) {
+  return (
+    <div className={`media relative shadow-sm ${className}`}>
+      <Image
+        src={g.img}
+        alt={g.label}
+        fill
+        sizes="(max-width: 1024px) 100vw, 60vw"
+        className="object-cover"
+      />
+      <div className="absolute bottom-[18px] left-[18px] rounded-full bg-black/[.52] px-3 py-1.5 text-[12px] text-ink tracking-[-.005em] backdrop-blur-[6px]">
+        {g.label}
+      </div>
+    </div>
+  );
+}
+
 export default function Gallery() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+  const { prevDisabled, nextDisabled, onPrevClick, onNextClick } =
+    useCarouselNav(emblaApi);
+
   return (
     <section id="gallery" className="section-py">
       <div className="fix">
@@ -36,24 +62,40 @@ export default function Gallery() {
           </p>
         </div>
 
-        <div className="grid grid-cols-[7fr_5fr] grid-rows-[320px_320px] gap-[18px] max-[800px]:grid-cols-1 max-[800px]:grid-rows-[240px_240px_240px_240px]">
+        {/* Desktop — static grid, no carousel */}
+        <div className="reveal hidden grid-cols-[7fr_5fr] grid-rows-[320px_320px] gap-[18px] lg:grid">
           {GALLERY.map((g, i) => (
-            <div
-              key={g.id}
-              className={`media reveal reveal-d${i + 1} relative shadow-sm`}
-            >
-              <Image
-                src={g.img}
-                alt={g.label}
-                fill
-                sizes="(max-width: 800px) 100vw, 60vw"
-                className="object-cover"
-              />
-              <div className="absolute bottom-[18px] left-[18px] rounded-full bg-black/[.52] px-3 py-1.5 text-[12px] text-ink tracking-[-.005em] backdrop-blur-[6px]">
-                {g.label}
-              </div>
-            </div>
+            <GalleryCard key={g.id} g={g} className={`reveal reveal-d${i + 1}`} />
           ))}
+        </div>
+
+        {/* Mobile / tablet — carousel */}
+        <div className="lg:hidden">
+          <div className="reveal overflow-hidden" ref={emblaRef}>
+            <div className="-ml-4.5 flex">
+              {GALLERY.map((g) => (
+                <div
+                  key={g.id}
+                  className="min-w-0 shrink-0 grow-0 basis-full pl-4.5 sm:basis-1/2"
+                >
+                  <GalleryCard g={g} className="h-[240px]" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-end gap-2.5">
+            <CarouselNavButton
+              direction="prev"
+              onClick={onPrevClick}
+              disabled={prevDisabled}
+            />
+            <CarouselNavButton
+              direction="next"
+              onClick={onNextClick}
+              disabled={nextDisabled}
+            />
+          </div>
         </div>
       </div>
     </section>
