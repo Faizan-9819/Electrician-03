@@ -1503,7 +1503,7 @@ function DetailsStep({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              className="w-full px-4 py-3 rounded-xl border border-line bg-soft focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-[14px] text-ink resize-none"
+              className="w-full px-4 py-3 rounded-md border border-line bg-soft focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-[14px] text-ink resize-none"
             />
           </Field>
         </div>
@@ -1667,7 +1667,7 @@ function Input({
     <input
       {...props}
       className={
-        "w-full h-[46px] px-4 rounded-xl border focus:ring-2 outline-none transition-all text-[14px] text-ink bg-soft " +
+        "w-full h-[46px] px-4 rounded-md border focus:ring-2 outline-none transition-all text-[14px] text-ink bg-soft " +
         (error
           ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
           : "border-line focus:border-accent focus:ring-accent/20") +

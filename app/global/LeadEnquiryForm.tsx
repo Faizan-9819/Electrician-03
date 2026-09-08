@@ -77,10 +77,7 @@ export default function LeadEnquiryForm({
       })
       .then((data) => {
         if (cancelled) return;
-        const enquirable = (data.services ?? []).filter(
-          (s) => s.isActive && !s.isConsultation,
-        );
-        setServices(enquirable);
+        setServices(data.services ?? []);
       })
       .catch(() => {
         // Non-critical — the form still works without the services list.
