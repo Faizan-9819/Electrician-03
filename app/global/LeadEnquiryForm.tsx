@@ -308,7 +308,7 @@ export default function LeadEnquiryForm({
             rows={3}
             value={formData.message}
             onChange={handleInputChange}
-            className="w-full resize-none rounded-md border border-line bg-soft px-4 py-3 text-sm text-ink transition-all outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+            className="w-full resize-none rounded-sm border border-line bg-soft px-4 py-3 text-sm text-ink transition-all outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
           />
         </div>
       </div>
