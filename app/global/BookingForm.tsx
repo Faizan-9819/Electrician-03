@@ -1691,12 +1691,13 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
 }
 
 function Spinner({ small = false }: { small?: boolean }) {
+  const { t } = useLanguage();
   const size = small ? 16 : 28;
   return (
     <span
       className="inline-block animate-spin rounded-full border-[2.5px] border-line border-t-accent"
       style={{ width: size, height: size }}
-      aria-label="Loading"
+      aria-label={t({ en: "Loading", nl: "Laden" })}
     />
   );
 }

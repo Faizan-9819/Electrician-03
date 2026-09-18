@@ -30,20 +30,24 @@ function fromCountry(country: string | null): Locale | null {
 }
 
 export async function detectInitialLocale(): Promise<Locale> {
-  const cookieStore = await cookies();
   const headerList = await headers();
 
-  const fromProxy = headerList.get("x-locale");
-  if (isLocale(fromProxy)) return fromProxy;
-
-  // Detect from URL path — /nl or /nl/* means Dutch regardless of cookie/header
+  // The URL path is authoritative whenever we know it: /nl or /nl/* is Dutch,
+  // anything else under this path scheme is English — regardless of any
+  // stale cookie or browser language from a previous visit.
   const pathname =
     headerList.get("x-pathname") ??
     headerList.get("x-invoke-path") ??
     headerList.get("x-matched-path") ??
-    "";
-  if (pathname === "/nl" || pathname.startsWith("/nl/")) return "nl";
+    null;
+  if (pathname !== null) {
+    return pathname === "/nl" || pathname.startsWith("/nl/") ? "nl" : "en";
+  }
 
+  const fromProxy = headerList.get("x-locale");
+  if (isLocale(fromProxy)) return fromProxy;
+
+  const cookieStore = await cookies();
   const cookieLocale = cookieStore.get(LOCALE_COOKIE)?.value;
   if (isLocale(cookieLocale)) return cookieLocale;
 

@@ -4,6 +4,7 @@ import SmoothScroll from "./components/SmoothScroll";
 import ScrollReveal from "./components/ScrollReveal";
 import FormModalProvider from "./global/FormModalProvider";
 import { LanguageProvider } from "./i18n/LanguageProvider";
+import { detectInitialLocale } from "./i18n/detect";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,14 +25,16 @@ export const metadata: Metadata = {
     "Strøm Electric — certified electricians delivering high-performance residential, commercial and EV electrical solutions across the Netherlands.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const initialLocale = await detectInitialLocale();
+
   return (
     <html
-      lang="en"
+      lang={initialLocale}
       className={`${geistSans.variable} ${instrumentSerif.variable} antialiased`}
     >
       <body className="bg-bg text-ink font-sans">
-        <LanguageProvider initialLocale="en">
+        <LanguageProvider initialLocale={initialLocale}>
           <SmoothScroll>
             <FormModalProvider>{children}</FormModalProvider>
           </SmoothScroll>

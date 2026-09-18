@@ -1,0 +1,44 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev -- -p 4127 > /tmp/nextdev.log 2>&1 & *)",
+      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:4127 >/dev/null; do sleep 1; done')",
+      "Bash(chromium-cli --session elec03)",
+      "Bash(npx playwright *)",
+      "Bash(lsof -ti:4127 -sTCP:LISTEN)",
+      "Bash(curl -sf http://localhost:4127)",
+      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:4128 >/dev/null; do sleep 1; done')",
+      "Bash(curl -sf http://localhost:4128 -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sf http://localhost:4127 -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(node mobile.js)",
+      "Bash(node desktop-check.js)",
+      "Bash(lsof -ti:4128 -sTCP:LISTEN)",
+      "Bash(curl -s http://localhost:4127/)",
+      "Bash(curl -s http://localhost:4127/nl)",
+      "Bash(curl -s http://localhost:4127/nl -o /tmp/nl.html)",
+      "Bash(node url-toggle.js)",
+      "Bash(node check404.js)",
+      "Bash(node nav-check.js)",
+      "Bash(node forms-check.js)",
+      "Bash(node sections-check.js)",
+      "Bash(node sections23-check.js)",
+      "Bash(node why-full.js)",
+      "Bash(node why-full2.js)",
+      "Bash(node sections45-check.js)",
+      "Bash(node sections67-check.js)",
+      "Bash(node sections89-check.js)",
+      "Bash(node sections1011-check.js)",
+      "Bash(node footer-floating-check2.js)",
+      "Bash(node footer-floating-check3.js)",
+      "Bash(node final-sweep.js)",
+      "Bash(xargs grep -L \"useLanguage\\\\|Translation\\\\|\\\\\"use client\\\\\";.*\\\\n.*next/font\")",
+      "Bash(curl -sf http://localhost:3000 -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(node mobile-menu-anim.js)",
+      "Bash(node desktop-unaffected.js)",
+      "Bash(node mobile-overlay-check.js)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}

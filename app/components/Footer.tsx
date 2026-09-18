@@ -1,19 +1,30 @@
-import Logo from "./Logo";
+"use client";
 
-const FOOTER_COLUMNS = [
+import Logo from "./Logo";
+import { useLanguage } from "../i18n/LanguageProvider";
+import type { Translation } from "../i18n/config";
+
+const FOOTER_COLUMNS: { title: Translation; items: Translation[] }[] = [
   {
-    title: "Company",
-    items: ["Home", "About", "Why Us", "Team", "Projects", "Blog"],
+    title: { en: "Company", nl: "Bedrijf" },
+    items: [
+      { en: "Home", nl: "Home" },
+      { en: "About", nl: "Over ons" },
+      { en: "Why Us", nl: "Waarom wij" },
+      { en: "Team", nl: "Team" },
+      { en: "Projects", nl: "Projecten" },
+      { en: "Blog", nl: "Blog" },
+    ],
   },
   {
-    title: "Services",
+    title: { en: "Services", nl: "Diensten" },
     items: [
-      "Emergency Repairs",
-      "Lighting",
-      "Fuse Box Upgrades",
-      "Inspections",
-      "Commercial",
-      "EV Chargers",
+      { en: "Emergency Repairs", nl: "Spoedreparaties" },
+      { en: "Lighting", nl: "Verlichting" },
+      { en: "Fuse Box Upgrades", nl: "Meterkast vervangen" },
+      { en: "Inspections", nl: "Keuringen" },
+      { en: "Commercial", nl: "Zakelijk" },
+      { en: "EV Chargers", nl: "Laadpalen" },
     ],
   },
 ];
@@ -21,6 +32,8 @@ const FOOTER_COLUMNS = [
 const SOCIALS = ["Instagram", "LinkedIn", "Google"];
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-black pt-10 md:pt-20 pb-8 text-ink">
       <div className="fix">
@@ -28,9 +41,10 @@ export default function Footer() {
           <div>
             <Logo color="#fff" />
             <p className="mt-5 max-w-[300px] text-sm leading-[1.6] text-[#9CABA6]">
-              Certified residential and commercial electricians — emergency
-              repairs, installations, EV charging and smart home, across the
-              Netherlands.
+              {t({
+                en: "Certified residential and commercial electricians — emergency repairs, installations, EV charging and smart home, across the Netherlands.",
+                nl: "Gecertificeerde elektriciens voor woningen en bedrijven — spoedreparaties, installaties, laadpalen en domotica, in heel Nederland.",
+              })}
             </p>
             <div className="mt-6 flex gap-2.5">
               {SOCIALS.map((s) => (
@@ -45,14 +59,14 @@ export default function Footer() {
             </div>
           </div>
           {FOOTER_COLUMNS.map((col) => (
-            <div key={col.title}>
+            <div key={col.title.en}>
               <div className="mb-[18px] text-xs tracking-[.16em] text-[#7E8E89] uppercase">
-                {col.title}
+                {t(col.title)}
               </div>
               <div className="grid gap-2.5">
                 {col.items.map((i) => (
-                  <a key={i} href="#" className="text-sm text-[#D5E0DC]">
-                    {i}
+                  <a key={i.en} href="#" className="text-sm text-[#D5E0DC]">
+                    {t(i)}
                   </a>
                 ))}
               </div>
@@ -60,7 +74,7 @@ export default function Footer() {
           ))}
           <div>
             <div className="mb-[18px] text-xs tracking-[.16em] text-[#7E8E89] uppercase">
-              Contact
+              {t({ en: "Contact", nl: "Contact" })}
             </div>
             <div className="grid gap-3 text-sm text-[#D5E0DC]">
               <div>
@@ -74,9 +88,9 @@ export default function Footer() {
                 hello@strom-electric.nl
               </div>
               <div className="mt-1 text-[12.5px] text-[#9CABA6]">
-                Mon–Fri 07:00–20:00
+                {t({ en: "Mon–Fri 07:00–20:00", nl: "Ma–vr 07:00–20:00" })}
                 <br />
-                Sat 08:00–17:00
+                {t({ en: "Sat 08:00–17:00", nl: "Za 08:00–17:00" })}
               </div>
             </div>
           </div>
@@ -88,28 +102,31 @@ export default function Footer() {
           <div>© 2026 Strøm Electric · KvK 81234567 · BTW NL003456789B01</div>
           <div className="flex flex-wrap gap-6">
             <a href="#privacy" className="text-[#9CABA6]">
-              Privacy Policy
+              {t({ en: "Privacy Policy", nl: "Privacybeleid" })}
             </a>
             <a href="#cookies" className="text-[#9CABA6]">
-              Cookie Settings
+              {t({ en: "Cookie Settings", nl: "Cookievoorkeuren" })}
             </a>
             <a href="#terms" className="text-[#9CABA6]">
-              Terms &amp; Conditions
+              {t({ en: "Terms & Conditions", nl: "Algemene voorwaarden" })}
             </a>
             <a href="#imprint" className="text-[#9CABA6]">
-              Imprint
+              {t({ en: "Imprint", nl: "Colofon" })}
             </a>
           </div>
         </div>
 
         <div className="md:mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/6 pt-6 text-[11.5px] text-[#5E6E69]">
           <span>
-            A flagship template by{" "}
-            <span className="text-[#B9CFC6]">Growth Rocket</span> — managed
-            websites &amp; booking for small businesses.
+            {t({ en: "A flagship template by", nl: "Een flagship-template van" })}{" "}
+            <span className="text-[#B9CFC6]">Growth Rocket</span>{" "}
+            {t({
+              en: "— managed websites & booking for small businesses.",
+              nl: "— beheerde websites & boekingen voor kleine bedrijven.",
+            })}
           </span>
           <span className="tracking-[.18em] uppercase">
-            Designed in Amsterdam
+            {t({ en: "Designed in Amsterdam", nl: "Ontworpen in Amsterdam" })}
           </span>
         </div>
       </div>

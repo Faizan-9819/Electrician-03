@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Icon from "./Icon";
 import WhatsAppIcon from "../global/WhatsAppIcon";
+import { useLanguage } from "../i18n/LanguageProvider";
 
 export default function FloatingUI() {
+  const { t } = useLanguage();
   const [waOpen, setWaOpen] = useState(false);
 
   return (
@@ -18,7 +20,7 @@ export default function FloatingUI() {
               <div className="flex-1">
                 <div className="text-sm font-medium">Strøm Electric</div>
                 <div className="text-[11.5px] opacity-75">
-                  Replies within 1 hour
+                  {t({ en: "Replies within 1 hour", nl: "Reageert binnen 1 uur" })}
                 </div>
               </div>
               <button onClick={() => setWaOpen(false)} className="text-white">
@@ -27,8 +29,10 @@ export default function FloatingUI() {
             </div>
             <div className="bg-tint p-4">
               <div className="max-w-[240px] rounded-tl-[14px] rounded-tr-[14px] rounded-br-[14px] rounded-bl-[4px] bg-surface px-3.5 py-2.5 text-[13.5px] leading-[1.4] text-ink-2">
-                Hi there — how can we help? A booking, a quote, or an emergency
-                call-out?
+                {t({
+                  en: "Hi there — how can we help? A booking, a quote, or an emergency call-out?",
+                  nl: "Hoi — waarmee kunnen we helpen? Een boeking, een offerte, of een spoedmelding?",
+                })}
               </div>
             </div>
             <a
@@ -37,7 +41,8 @@ export default function FloatingUI() {
               rel="noopener noreferrer"
               className="btn btn--accent m-3.5 justify-center"
             >
-              Start chat <Icon name="arrowUR" size={12} stroke={2} />
+              {t({ en: "Start chat", nl: "Start de chat" })}{" "}
+              <Icon name="arrowUR" size={12} stroke={2} />
             </a>
           </div>
         )}
@@ -57,11 +62,13 @@ export default function FloatingUI() {
       {/* Sticky mobile book bar */}
       <div className="hidden fixed inset-x-3 bottom-3 z-[55] flex items-center justify-between rounded-full border border-line bg-[#161616] py-2.5 pr-2.5 pl-[18px] text-ink shadow-lg lg:hidden">
         <div className="text-[13.5px]">
-          <div className="text-[11px] opacity-70">Next available</div>
-          <div>Thu, May 21 · 10:40</div>
+          <div className="text-[11px] opacity-70">
+            {t({ en: "Next available", nl: "Volgende beschikbaar" })}
+          </div>
+          <div>{t({ en: "Thu, May 21 · 10:40", nl: "Do, 21 mei · 10:40" })}</div>
         </div>
         <a href="#book" className="btn btn--accent btn--sm">
-          Book <Icon name="arrowUR" size={11} stroke={2} />
+          {t({ en: "Book", nl: "Boeken" })} <Icon name="arrowUR" size={11} stroke={2} />
         </a>
       </div>
     </>

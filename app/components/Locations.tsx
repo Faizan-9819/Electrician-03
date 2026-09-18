@@ -1,45 +1,57 @@
+"use client";
+
 import Image from "next/image";
 import Icon from "./Icon";
+import { useLanguage } from "../i18n/LanguageProvider";
+import type { Translation } from "../i18n/config";
 
 type Location = {
-  name: string;
+  name: Translation;
   photo: string;
   addr: string;
-  hours: string;
+  hours: Translation;
   phone: string;
   main?: boolean;
 };
 
 const LOCATIONS: Location[] = [
   {
-    name: "Amsterdam — HQ",
+    name: { en: "Amsterdam — HQ", nl: "Amsterdam — Hoofdkantoor" },
     photo: "/images/locations/amsterdam-hq.jpg",
     addr: "Contactweg 36, 1014 AN Amsterdam",
-    hours: "Mon–Fri 07:00–20:00 · Sat 08:00–17:00",
+    hours: {
+      en: "Mon–Fri 07:00–20:00 · Sat 08:00–17:00",
+      nl: "Ma–vr 07:00–20:00 · Za 08:00–17:00",
+    },
     phone: "+31 20 123 4567",
     main: true,
   },
   {
-    name: "Rotterdam — Depot",
+    name: { en: "Rotterdam — Depot", nl: "Rotterdam — Depot" },
     photo: "/images/locations/rotterdam-depot.jpg",
     addr: "Schiehavenkade 12, 3024 EZ Rotterdam",
-    hours: "Mon–Fri 07:00–19:00 · Sat 08:00–16:00",
+    hours: {
+      en: "Mon–Fri 07:00–19:00 · Sat 08:00–16:00",
+      nl: "Ma–vr 07:00–19:00 · Za 08:00–16:00",
+    },
     phone: "+31 10 987 6543",
   },
 ];
 
-const ALSO_COVERING = [
-  "Amsterdam",
-  "Rotterdam",
-  "The Hague",
-  "Utrecht",
-  "Eindhoven",
-  "Leiden",
-  "Haarlem",
-  "Delft",
+const ALSO_COVERING: Translation[] = [
+  { en: "Amsterdam", nl: "Amsterdam" },
+  { en: "Rotterdam", nl: "Rotterdam" },
+  { en: "The Hague", nl: "Den Haag" },
+  { en: "Utrecht", nl: "Utrecht" },
+  { en: "Eindhoven", nl: "Eindhoven" },
+  { en: "Leiden", nl: "Leiden" },
+  { en: "Haarlem", nl: "Haarlem" },
+  { en: "Delft", nl: "Delft" },
 ];
 
 export default function Locations() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="locations"
@@ -48,30 +60,32 @@ export default function Locations() {
       <div className="fix">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div className="reveal">
-            <span className="eyebrow">Service areas</span>
+            <span className="eyebrow">{t({ en: "Service areas", nl: "Werkgebieden" })}</span>
             <h2 className="mt-[18px] text-[34px] md:text-[52px]">
-              Two bases,{" "}
+              {t({ en: "Two bases,", nl: "Twee locaties," })}{" "}
               <span className="display-serif text-accent-deep">
-                one standard.
+                {t({ en: "one standard.", nl: "één standaard." })}
               </span>
             </h2>
           </div>
           <p className="lede reveal reveal-d1 max-w-[380px]">
-            Both bases share the same team, equipment and certification
-            standards. We cover the entire Randstad and beyond.
+            {t({
+              en: "Both bases share the same team, equipment and certification standards. We cover the entire Randstad and beyond.",
+              nl: "Beide locaties delen hetzelfde team, dezelfde apparatuur en certificeringsnormen. Wij zijn actief in de hele Randstad en daarbuiten.",
+            })}
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {LOCATIONS.map((l, i) => (
             <div
-              key={l.name}
+              key={l.name.en}
               className={`card reveal reveal-d${i + 1} overflow-hidden p-0`}
             >
               <div className="media relative h-[220px]">
                 <Image
                   src={l.photo}
-                  alt={`${l.name} — Strøm Electric`}
+                  alt={`${t(l.name)} — Strøm Electric`}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
@@ -79,12 +93,12 @@ export default function Locations() {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/12 to-bg/45" />
                 {l.main && (
                   <div className="absolute top-3.5 left-3.5 rounded-full bg-accent px-2.5 py-1 text-[11px] tracking-[.08em] text-[#0B0B0B] uppercase">
-                    Main base
+                    {t({ en: "Main base", nl: "Hoofdlocatie" })}
                   </div>
                 )}
               </div>
               <div className="pt-6 pr-[26px] pb-[26px] pl-[26px]">
-                <h3 className="text-xl">{l.name}</h3>
+                <h3 className="text-xl">{t(l.name)}</h3>
                 <div className="mt-4 grid gap-2.5 text-sm text-ink-2">
                   <div className="flex gap-2.5">
                     <Icon
@@ -100,7 +114,7 @@ export default function Locations() {
                       size={15}
                       className="mt-0.5 shrink-0 text-muted"
                     />{" "}
-                    {l.hours}
+                    {t(l.hours)}
                   </div>
                   <div className="flex gap-2.5">
                     <Icon
@@ -113,10 +127,11 @@ export default function Locations() {
                 </div>
                 <div className="mt-[22px] flex gap-2.5">
                   <a href="#book" className="btn btn--primary btn--sm">
-                    Book here
+                    {t({ en: "Book here", nl: "Boek hier" })}
                   </a>
                   <a href="#directions" className="btn btn--ghost btn--sm">
-                    Get directions <Icon name="arrowUR" size={12} stroke={2} />
+                    {t({ en: "Get directions", nl: "Routebeschrijving" })}{" "}
+                    <Icon name="arrowUR" size={12} stroke={2} />
                   </a>
                 </div>
               </div>
@@ -126,15 +141,15 @@ export default function Locations() {
 
         <div className="reveal mt-10 border-t border-line pt-8">
           <div className="mb-[18px] text-xs tracking-[.16em] text-muted uppercase">
-            Also covering
+            {t({ en: "Also covering", nl: "Ook actief in" })}
           </div>
           <div className="flex flex-wrap gap-2.5">
             {ALSO_COVERING.map((c) => (
               <span
-                key={c}
+                key={c.en}
                 className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-[9px] text-[13.5px] text-ink-2"
               >
-                <Icon name="pin" size={13} className="text-accent-deep" /> {c}
+                <Icon name="pin" size={13} className="text-accent-deep" /> {t(c)}
               </span>
             ))}
           </div>

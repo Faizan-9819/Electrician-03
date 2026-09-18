@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Icon from "./Icon";
+import { useLanguage } from "../i18n/LanguageProvider";
 
 const AVATARS = [
   "/images/team/daan-visser.jpg",
@@ -9,6 +12,8 @@ const AVATARS = [
 ];
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section id="top" className="section-py relative overflow-hidden">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
@@ -34,28 +39,40 @@ export default function Hero() {
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-tint text-accent-deep">
                 <Icon name="bolt" size={13} />
               </span>
-              <span className="text-[13px] text-ink-2">24/7 emergency response · Netherlands</span>
+              <span className="text-[13px] text-ink-2">
+                {t({
+                  en: "24/7 emergency response · Netherlands",
+                  nl: "24/7 storingsdienst · Nederland",
+                })}
+              </span>
             </div>
             <h1 className="text-[clamp(44px,5.5vw,76px)] leading-[1.02] font-normal tracking-[-.025em]">
-              High-performance electrical
+              {t({
+                en: "High-performance electrical",
+                nl: "Krachtige elektrotechnische",
+              })}
               <br />
-              solutions for{" "}
-              <span className="display-serif text-accent-deep">modern living.</span>
+              {t({ en: "solutions for", nl: "oplossingen voor" })}{" "}
+              <span className="display-serif text-accent-deep">
+                {t({ en: "modern living.", nl: "modern wonen." })}
+              </span>
             </h1>
             <p className="lede mt-6 max-w-[520px]">
-              From emergency repairs to complete installations, we deliver certified
-              electrical solutions for homes and businesses across the Netherlands — on
-              time, on budget, done to standard.
+              {t({
+                en: "From emergency repairs to complete installations, we deliver certified electrical solutions for homes and businesses across the Netherlands — on time, on budget, done to standard.",
+                nl: "Van spoedreparaties tot complete installaties leveren wij gecertificeerde elektrotechnische oplossingen voor woningen en bedrijven in heel Nederland — op tijd, binnen budget, volgens de norm.",
+              })}
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <a href="#book" className="btn btn--primary btn--lg">
-                Book appointment{" "}
+                {t({ en: "Book appointment", nl: "Maak een afspraak" })}{" "}
                 <span className="arrow">
                   <Icon name="arrowUR" size={12} stroke={2} />
                 </span>
               </a>
               <a href="#gallery" className="btn btn--ghost btn--lg">
-                <Icon name="bolt" size={15} /> See our projects
+                <Icon name="bolt" size={15} />{" "}
+                {t({ en: "See our projects", nl: "Bekijk onze projecten" })}
               </a>
             </div>
             <div className="mt-11 flex items-center gap-4.5">
@@ -76,11 +93,14 @@ export default function Hero() {
                     <Icon key={i} name="star" size={14} stroke={0} className="fill-current" />
                   ))}
                   <span className="ml-2 text-[13px] font-medium text-ink">
-                    4.9 · Google reviews
+                    {t({ en: "4.9 · Google reviews", nl: "4,9 · Google reviews" })}
                   </span>
                 </div>
                 <div className="mt-1 text-[13px] text-muted">
-                  From 2,000+ completed projects across the Netherlands
+                  {t({
+                    en: "From 2,000+ completed projects across the Netherlands",
+                    nl: "Van 2.000+ afgeronde projecten in heel Nederland",
+                  })}
                 </div>
               </div>
             </div>
@@ -91,7 +111,10 @@ export default function Hero() {
             <div className="media relative aspect-[4/5] rounded-2xl shadow-lg">
               <Image
                 src="/images/hero-electrician-lighting.jpg"
-                alt="Strøm electrician installing modern hexagon lighting"
+                alt={t({
+                  en: "Strøm electrician installing modern hexagon lighting",
+                  nl: "Strøm elektricien installeert moderne hexagon-verlichting",
+                })}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 45vw"
@@ -109,15 +132,22 @@ export default function Hero() {
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[#0B0B0B]">
                   <Icon name="shield" size={14} stroke={2} />
                 </span>
-                NEN 1010 certified
+                {t({ en: "NEN 1010 certified", nl: "NEN 1010 gecertificeerd" })}
               </div>
             </div>
 
             <div className="absolute top-[54%] -right-5 w-[200px] rounded-md border border-line bg-[#0E0E0E] p-5 text-white shadow-lg [animation:floatY_7s_ease-in-out_infinite_.8s]">
-              <div className="text-[11px] tracking-[.16em] uppercase opacity-60">Since 2010</div>
-              <div className="display-serif mt-1.5 text-[38px] leading-none">15+ yrs</div>
+              <div className="text-[11px] tracking-[.16em] uppercase opacity-60">
+                {t({ en: "Since 2010", nl: "Sinds 2010" })}
+              </div>
+              <div className="display-serif mt-1.5 text-[38px] leading-none">
+                {t({ en: "15+ yrs", nl: "15+ jaar" })}
+              </div>
               <div className="mt-1.5 text-[13px] opacity-85">
-                of certified residential &amp; commercial work.
+                {t({
+                  en: "of certified residential & commercial work.",
+                  nl: "gecertificeerd residentieel & zakelijk werk.",
+                })}
               </div>
             </div>
           </div>
