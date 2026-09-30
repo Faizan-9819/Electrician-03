@@ -1,14 +1,14 @@
 "use client";
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
-  useState,
+  useMemo,
   type ReactNode,
 } from "react";
-import { usePathname } from "next/navigation";
-import { LOCALE_COOKIE, type Locale, type Translation } from "./config";
+import { usePathname, useRouter } from "next/navigation";
+import { languageFromPathname, pathForLanguage } from "@/lib/i18n";
+import type { Locale, Translation } from "./config";
 
 type LanguageContextValue = {
   locale: Locale;
@@ -18,45 +18,33 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-function persistLocaleCookie(locale: Locale) {
-  if (typeof document === "undefined") return;
-  const oneYear = 60 * 60 * 24 * 365;
-  document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=${oneYear}; SameSite=Lax`;
-}
-
-export function LanguageProvider({
-  initialLocale,
-  children,
-}: {
-  initialLocale: Locale;
-  children: ReactNode;
-}) {
+export function LanguageProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const router = useRouter();
+
+  // The URL is the only source of truth. Deriving on every render keeps this
+  // right on direct visits and on browser back/forward, with no mirrored
+  // state that could drift out of sync.
+  const locale = languageFromPathname(pathname);
 
   useEffect(() => {
-    const next: Locale =
-      pathname === "/nl" || pathname.startsWith("/nl/") ? "nl" : "en";
-    const timeout = window.setTimeout(() => setLocaleState(next), 0);
-    if (typeof document !== "undefined") document.documentElement.lang = next;
-    return () => window.clearTimeout(timeout);
-  }, [pathname]);
+    document.documentElement.lang = locale;
+  }, [locale]);
 
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    persistLocaleCookie(next);
-    if (typeof document !== "undefined") {
-      document.documentElement.lang = next;
-    }
-  }, []);
-
-  const t = useCallback(
-    (entry: Translation) => entry[locale] ?? entry.en,
-    [locale],
+  const value = useMemo<LanguageContextValue>(
+    () => ({
+      locale,
+      setLocale: (next) => {
+        if (next === locale) return;
+        router.push(pathForLanguage(next));
+      },
+      t: (entry) => entry[locale] ?? entry.en,
+    }),
+    [locale, router],
   );
 
   return (
-    <LanguageContext.Provider value={{ locale, setLocale, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

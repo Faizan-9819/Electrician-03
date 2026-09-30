@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { defaultLanguage, pathForLanguage, rootLanguage } from "@/lib/i18n";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -16,6 +18,10 @@ import Footer from "./components/Footer";
 import FloatingUI from "./components/FloatingUI";
 
 export default function Home() {
+  // When neither language uses "/", it isn't a real page — send visitors on
+  // to the main language's own URL.
+  if (!rootLanguage()) redirect(pathForLanguage(defaultLanguage()));
+
   return (
     <>
       <Header />

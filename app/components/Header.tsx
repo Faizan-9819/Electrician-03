@@ -8,6 +8,8 @@ import Logo from "./Logo";
 import WhatsAppIcon from "../global/WhatsAppIcon";
 import { useLanguage } from "../i18n/LanguageProvider";
 import type { Locale } from "../i18n/config";
+import { isMultiLanguage, pathForLanguage } from "@/lib/i18n";
+import { SHOW_LANGUAGE_TOGGLE } from "@/settings";
 
 const NAV = [
   { href: "#top", en: "Home", nl: "Home" },
@@ -29,10 +31,12 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const showLanguageToggle = SHOW_LANGUAGE_TOGGLE && isMultiLanguage();
+
   const goToLocale = (target: Locale) => {
     if (target === locale) return;
     const hash = typeof window !== "undefined" ? window.location.hash : "";
-    router.push((target === "nl" ? "/nl" : "/") + hash);
+    router.push(pathForLanguage(target) + hash);
   };
 
   const languageToggle = (display: string) => (
@@ -103,7 +107,7 @@ export default function Header() {
           >
             <WhatsAppIcon size={18} />
           </a>
-          {languageToggle("hidden md:inline-flex")}
+          {showLanguageToggle && languageToggle("hidden md:inline-flex")}
           <a href="#contact" className="btn btn--ghost btn--sm hidden md:inline-flex">
             {t({ en: "Contact Us", nl: "Contact" })}
           </a>
@@ -116,7 +120,7 @@ export default function Header() {
               <Icon name="arrowUR" size={11} stroke={2} />
             </span>
           </a>
-          {languageToggle("inline-flex md:hidden")}
+          {showLanguageToggle && languageToggle("inline-flex md:hidden")}
           <button
             className="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-line bg-surface md:hidden"
             onClick={() => setOpen((o) => !o)}
