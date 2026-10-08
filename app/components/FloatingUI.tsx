@@ -11,8 +11,9 @@ export default function FloatingUI() {
 
   return (
     <>
-      {/* Floating WhatsApp */}
-      <div className="fixed right-5 bottom-5 z-[60] flex flex-col items-end gap-3">
+      {/* Floating WhatsApp — lifts above the cookie bar while it's open
+          (--cookie-bar-h is set by CookieConsentBanner). */}
+      <div className="fixed right-5 bottom-[calc(1.25rem+var(--cookie-bar-h,0px))] z-[60] flex flex-col items-end gap-3 transition-[bottom] duration-300">
         {waOpen && (
           <div className="w-[300px] animate-[fadeUp_.3s_ease_both] overflow-hidden rounded-md border border-line bg-surface shadow-lg">
             <div className="flex items-center gap-2.5 bg-[#141414] px-4 py-3.5 text-white">

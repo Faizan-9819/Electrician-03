@@ -75,111 +75,125 @@ export default function Header() {
   );
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-        scrolled
-          ? "border-line bg-bg/[.82] backdrop-blur-[14px] backdrop-saturate-[1.4]"
-          : "border-transparent bg-transparent"
-      }`}
-    >
-      <div className="fix flex h-[76px] items-center gap-8">
-        <a href="#top">
-          <Logo />
-        </a>
-        <nav className="ml-6 hidden gap-1 md:flex">
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="rounded-full px-3.5 py-2 text-sm text-ink-2 transition-colors hover:bg-tint hover:text-ink"
-            >
-              {t({ en: n.en, nl: n.nl })}
-            </a>
-          ))}
-        </nav>
-        <div className="ml-auto flex items-center gap-2.5">
-          <a
-            href="https://wa.me/31644008821"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="WhatsApp"
-            className="hidden h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-accent-deep md:inline-flex"
-          >
-            <WhatsAppIcon size={18} />
-          </a>
-          {showLanguageToggle && languageToggle("hidden md:inline-flex")}
-          <a href="#contact" className="btn btn--ghost btn--sm hidden md:inline-flex">
-            {t({ en: "Contact Us", nl: "Contact" })}
-          </a>
-          <a
-            href="#book"
-            className="btn btn--primary btn--sm hidden md:inline-flex"
-          >
-            {t({ en: "Book Appointment", nl: "Afspraak maken" })}{" "}
-            <span className="arrow">
-              <Icon name="arrowUR" size={11} stroke={2} />
-            </span>
-          </a>
-          {showLanguageToggle && languageToggle("inline-flex md:hidden")}
-          <button
-            className="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-line bg-surface md:hidden"
-            onClick={() => setOpen((o) => !o)}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={open ? "close" : "burger"}
-                initial={{ opacity: 0, rotate: -45 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 45 }}
-                transition={{ duration: 0.18 }}
-                className="inline-flex"
-              >
-                <Icon name={open ? "close" : "burger"} size={18} />
-              </motion.span>
-            </AnimatePresence>
-          </button>
-        </div>
+    <>
+      {/* Top promo bar — in normal flow, so it scrolls away and the sticky header pins to the top. */}
+      <div className="w-full bg-[#2d2d2d] flex items-center justify-between px-6 sm:px-12 py-2.5">
+        <span className="text-white text-sm sm:text-base font-semibold tracking-wide">
+          Get Growth Rocket
+        </span>
+        <button
+          type="button"
+          className="bg-[#8bc53f] hover:bg-[#7ab432] transition-colors text-white text-xs sm:text-sm font-semibold px-4 py-1.5 rounded cursor-pointer whitespace-nowrap"
+        >
+          Buy now
+        </button>
       </div>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full overflow-hidden border-t border-line bg-surface shadow-lg md:hidden"
-          >
-            <div className="fix grid gap-0.5 py-2.5">
-              {NAV.map((n, i) => (
+      <header
+        className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
+          scrolled
+            ? "border-line bg-bg/[.82] backdrop-blur-[14px] backdrop-saturate-[1.4]"
+            : "border-transparent bg-transparent"
+        }`}
+      >
+        <div className="fix flex h-[76px] items-center gap-8">
+          <a href="#top">
+            <Logo />
+          </a>
+          <nav className="ml-6 hidden gap-1 md:flex">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="rounded-full px-3.5 py-2 text-sm text-ink-2 transition-colors hover:bg-tint hover:text-ink"
+              >
+                {t({ en: n.en, nl: n.nl })}
+              </a>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-2.5">
+            <a
+              href="https://wa.me/31644008821"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="WhatsApp"
+              className="hidden h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-accent-deep md:inline-flex"
+            >
+              <WhatsAppIcon size={18} />
+            </a>
+            {showLanguageToggle && languageToggle("hidden md:inline-flex")}
+            <a href="#contact" className="btn btn--ghost btn--sm hidden md:inline-flex">
+              {t({ en: "Contact Us", nl: "Contact" })}
+            </a>
+            <a
+              href="#book"
+              className="btn btn--primary btn--sm hidden md:inline-flex"
+            >
+              {t({ en: "Book Appointment", nl: "Afspraak maken" })}{" "}
+              <span className="arrow">
+                <Icon name="arrowUR" size={11} stroke={2} />
+              </span>
+            </a>
+            {showLanguageToggle && languageToggle("inline-flex md:hidden")}
+            <button
+              className="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-line bg-surface md:hidden"
+              onClick={() => setOpen((o) => !o)}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={open ? "close" : "burger"}
+                  initial={{ opacity: 0, rotate: -45 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: 45 }}
+                  transition={{ duration: 0.18 }}
+                  className="inline-flex"
+                >
+                  <Icon name={open ? "close" : "burger"} size={18} />
+                </motion.span>
+              </AnimatePresence>
+            </button>
+          </div>
+        </div>
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-x-0 top-full overflow-hidden border-t border-line bg-surface shadow-lg md:hidden"
+            >
+              <div className="fix grid gap-0.5 py-2.5">
+                {NAV.map((n, i) => (
+                  <motion.a
+                    key={n.href}
+                    href={n.href}
+                    onClick={() => setOpen(false)}
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.22, delay: 0.05 + i * 0.04 }}
+                    className="rounded-[10px] px-2 py-3 text-[15px] text-ink"
+                  >
+                    {t({ en: n.en, nl: n.nl })}
+                  </motion.a>
+                ))}
                 <motion.a
-                  key={n.href}
-                  href={n.href}
+                  href="#book"
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.22, delay: 0.05 + i * 0.04 }}
-                  className="rounded-[10px] px-2 py-3 text-[15px] text-ink"
+                  transition={{ duration: 0.22, delay: 0.05 + NAV.length * 0.04 }}
+                  className="btn btn--primary btn--sm mt-2 w-full"
                 >
-                  {t({ en: n.en, nl: n.nl })}
+                  {t({ en: "Book Appointment", nl: "Afspraak maken" })}{" "}
+                  <span className="arrow">
+                    <Icon name="arrowUR" size={11} stroke={2} />
+                  </span>
                 </motion.a>
-              ))}
-              <motion.a
-                href="#book"
-                onClick={() => setOpen(false)}
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.22, delay: 0.05 + NAV.length * 0.04 }}
-                className="btn btn--primary btn--sm mt-2 w-full"
-              >
-                {t({ en: "Book Appointment", nl: "Afspraak maken" })}{" "}
-                <span className="arrow">
-                  <Icon name="arrowUR" size={11} stroke={2} />
-                </span>
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   );
 }

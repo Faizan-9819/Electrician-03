@@ -1,5 +1,5 @@
 // Shared cookie-consent storage helpers, used by both the first-visit
-// corner banner (CookieConsentBanner) and the full preferences dialog
+// bottom bar (CookieConsentBanner) and the full preferences dialog
 // (CookieModal) so they always read/write the exact same record.
 
 export const COOKIE_CONSENT_STORAGE_KEY = "strom-cookie-consent";
